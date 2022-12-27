@@ -1,0 +1,37 @@
+// font
+$font-global: 'Lexend', sans-serif;
+
+// color
+$color-global: #1F2533;
+$color-primary: #359740;
+$color-extra: #70737C;
+$color-secondary: #EFEFEF;
+$color-service: #4FA083;
+$color-info: #FFCF55;
+$color-base: #EAF1EB;
+$color-danger: #E55C5C;
+// $color-basic: #FFDD8E;
+// $color-general: #605F5F;
+// $color-dark: #343030;
+// $color-factory: #F6F9FF;
+
+// screen
+$viewport-xlg: 1400px;
+$viewport-pre-xlg: $viewport-xlg - 1px;
+$viewport-post-xlg: $viewport-xlg + 1px;
+
+$viewport-lg: 1280px;
+$viewport-pre-lg: $viewport-lg - 1px;
+$viewport-post-lg: $viewport-lg + 1px;
+
+$viewport-md: 1070px;
+$viewport-pre-md: $viewport-md - 1px;
+$viewport-post-md: $viewport-md + 1px;
+
+$viewport-sm: 768px;
+$viewport-pre-sm: $viewport-sm - 1px;
+$viewport-post-sm: $viewport-sm + 1px;
+
+$viewport-xs: 480px;
+$viewport-pre-xs: $viewport-xs - 1px;
+$viewport-post-xs: $viewport-xs + 1px;
