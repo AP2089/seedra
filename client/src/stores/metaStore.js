@@ -1,11 +1,10 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import axios from '@/axios';
-import debounce from '@/helpers/debounce';
+import useFeatchEvent from '@/hooks/useFeatchEvent';
 
 const useMetaStore = defineStore('metaStore', () => {
-  const isLoading = ref(false);
-  const error = ref('');
+  const { isLoading, error, loading, unload, loaded } = useFeatchEvent();
   const menuMain = ref([]);
   const menuSocial = ref([]);
   const menuFootLeft = ref([]);
@@ -13,8 +12,7 @@ const useMetaStore = defineStore('metaStore', () => {
 
   const itemsFeatch = async () => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
       const {data} = await axios.get('/meta');
 
@@ -23,13 +21,9 @@ const useMetaStore = defineStore('metaStore', () => {
       menuFootLeft.value = data.menuFootLeft;
       menuFootRight.value = data.menuFootRight;
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, 3000);
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
 

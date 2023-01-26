@@ -14,17 +14,10 @@
 </template>
 
 <script setup>
-import { onBeforeMount } from 'vue';
 import useGlobalState from '@/stores/globalStore';
 import Notification from '@/components/ui/Notification';
-import useLocalStorage from '@/hooks/useLocalStorage';
 
 const globalStore = useGlobalState();
-const localStorage = useLocalStorage();
-
-onBeforeMount(() => {
-  localStorage.storageCreate();
-});
 </script>
 
 <style lang="scss">

@@ -9,6 +9,8 @@ import AboutView from '@/views/AboutView';
 import ContactsView from '@/views/ContactsView';
 import FavoritesView from '@/views/FavoritesView';
 import CatalogView from '@/views/CatalogView';
+import ProductView from '@/views/ProductView';
+import CartView from '@/views/CartView';
 
 const routes = [
   {
@@ -52,9 +54,19 @@ const routes = [
     component: FavoritesView
   },
   {
+    path: '/cart',
+    name: 'cart',
+    component: CartView
+  },
+  {
     path: '/catalog',
     name: 'catalog',
     component: CatalogView
+  },
+  {
+    path: '/product/:id',
+    name: 'product',
+    component: ProductView
   },
   {
     path: '/:pathMatch(.*)*',

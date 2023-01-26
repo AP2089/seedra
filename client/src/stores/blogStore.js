@@ -1,53 +1,36 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useHead } from 'unhead';
-import { errorClearTimeout } from '@/config';
 import axios from '@/axios';
-import debounce from '@/helpers/debounce';
-import usePaginationUrlParams from '@/hooks/usePaginationUrlParams';
+import useFeatchItems from '@/hooks/useFeatchItems';
 
 const useBlogStore = defineStore('blogStore', () => {
+  const { isLoading, error, pageCount, loading, unload, loaded, setOptions, setUrlParams } = useFeatchItems();
   const title = ref('');
   const description = ref('');
   const items = ref([]);
-  const totalCount = ref(0);
-  const limit = ref(9);
-  const isLoading = ref(false);
-  const error = ref('');
 
-  const dataFeatch = async (pageNumber) => {
+  const dataFeatch = async (pageNumber = null) => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
-      const params = usePaginationUrlParams({
-        _page: pageNumber,
-        _limit: limit.value
+      const setParams = setUrlParams({
+        _page: pageNumber
       });
 
       const { data, headers } = await axios.get('/blog', {
-        params
+        params: setParams
       });
 
-      useHead(data.meta);
+      setOptions(data.meta, headers['x-total-count']);
       title.value = data.title;
       description.value = data.description;
       items.value = data.items;
-      totalCount.value =  Number(headers['x-total-count']);
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
-
-  const pageCount = computed(() => {
-    return Math.ceil(totalCount.value / limit.value);
-  });
 
   return {
     title,

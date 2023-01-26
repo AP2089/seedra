@@ -2,21 +2,24 @@ const useLocalStorage = () => {
   const NAME = '$storage';
 
   const getStorage = () => {
-    return JSON.parse(localStorage.getItem(NAME)); 
+    const localStores = JSON.parse(localStorage.getItem(NAME));
+
+    if (localStores) {
+      return localStores;
+    } else {
+      const data = {
+        cartAdded: [],
+        likeAdded: [],
+        cartAmount: []
+      }
+
+      setStorage(data);
+      return data;
+    }
   }
 
   const setStorage = (value) => {
     localStorage.setItem(NAME, JSON.stringify(value));
-  }
-
-  const storageCreate = () => {
-    if (!getStorage()) {
-      setStorage({
-        cartAdded: [],
-        likeAdded: [],
-        cartCalcs: []
-      });
-    }
   }
 
   const getCollection = (array, val) => {
@@ -42,12 +45,43 @@ const useLocalStorage = () => {
     setStorage(storage);
   }
 
+  const cartAmountSet = (data) => {
+    const storage = getStorage();
+
+    if (storage.cartAmount.filter(e => e.id === data.id).length > 0) {
+      storage.cartAmount.forEach(e => e.id === data.id && (e.value = data.value));
+    } else {
+      storage.cartAmount.push(data);
+    }
+
+    setStorage(storage);
+  }
+
+  const cartAmountRemove = (id) => {
+    const storage = getStorage();
+
+    storage.cartAmount = storage.cartAmount.filter(e => e.id !== id);
+
+    setStorage(storage);
+  }
+
+  const cartOrder = () => {
+    const storage = getStorage();
+
+    storage.cartAdded = [];
+    storage.cartAmount = [];
+
+    setStorage(storage);
+  }
+
   return {
     getStorage,
     setStorage,
-    storageCreate,
     cartToggle,
     likeToggle,
+    cartAmountSet,
+    cartAmountRemove,
+    cartOrder
   }
 }
 

@@ -1,64 +1,47 @@
-import { computed, ref } from 'vue';
-import { defineStore, mapStores, setMapStoreSuffix } from 'pinia';
+import { ref, computed } from 'vue';
+import { defineStore, getActivePinia } from 'pinia';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import useMetaStore from '@/stores/metaStore';
-import useHomeStore from '@/stores/homeStore';
-import useBlogStore from '@/stores/blogStore';
-import useArticleStore from '@/stores/articleStore';
-import useAboutStore from '@/stores/aboutStore';
-import usePrivacyStore from '@/stores/privacyStore';
-import useTermsStore from '@/stores/termsStore';
-import useContactsStore from '@/stores/contactsStore';
-import useFavoritesStore from '@/stores/contactsStore';
-import useCatalogStore from '@/stores/catalogStore';
 
 const useGlobalStore = defineStore('globalStore', () => {
-  setMapStoreSuffix('');
-
+  const storesActive = getActivePinia();
   const localStorage = useLocalStorage();
   const currencySymbol = ref('$');
   const cartAdded = ref(localStorage.getStorage().cartAdded);
   const likeAdded = ref(localStorage.getStorage().likeAdded);
-
-  const stores = computed(() => ({
-    ...mapStores(
-      useMetaStore,
-      useHomeStore,
-      useBlogStore,
-      useArticleStore,
-      useAboutStore,
-      usePrivacyStore,
-      useTermsStore,
-      useContactsStore,
-      useFavoritesStore,
-      useCatalogStore
-    )
-  }));
+  const cartAmount = ref(localStorage.getStorage().cartAmount);
 
   const isLoading = computed(() => {
-    const data = stores.value;
-    const values = [];
+    if (storesActive) {
+      const data = storesActive.state.value;
+      const values = [];
 
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        values.push(data[key]().$state.isLoading);
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          values.push(data[key].isLoading);
+        }
       }
+  
+      return values.includes(true);
     }
 
-    return values.includes(true);
+    return false;
   });
 
   const errors = computed(() => {
-    const data = stores.value;
-    const values = [];
+    if (storesActive) {
+      const data = storesActive.state.value;
+      const values = [];
 
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        values.push(data[key]().$state.error);
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          values.push(data[key].error);
+        }
       }
+  
+      return values.filter(v => !!v);
     }
 
-    return values.filter(v => !!v);
+    return [];
   });
 
   const cartChange = (id) => {
@@ -71,14 +54,34 @@ const useGlobalStore = defineStore('globalStore', () => {
     likeAdded.value = localStorage.getStorage().likeAdded;
   }
 
+  const amountChange = (data) => {
+    localStorage.cartAmountSet(data);
+    cartAmount.value = localStorage.getStorage().cartAmount;
+  }
+
+  const amountRemove = (id) => {
+    localStorage.cartAmountRemove(id);
+    cartAmount.value = localStorage.getStorage().cartAmount;
+  }
+
+  const cartOrder = () => {
+    localStorage.cartOrder();
+    cartAdded.value = localStorage.getStorage().cartAdded;
+    cartAmount.value = localStorage.getStorage().cartAmount;
+  }
+
   return {
     cartAdded,
     likeAdded,
+    cartAmount,
     currencySymbol,
     isLoading,
     errors,
     cartChange,
-    likeChange
+    likeChange,
+    amountChange,
+    amountRemove,
+    cartOrder
   }
 });
 

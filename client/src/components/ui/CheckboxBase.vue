@@ -3,8 +3,9 @@
     <input
       type="checkbox"
       class="checkbox-base__field"
-      :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :value="value"
+      :checked="checked"
+      @input="change"
     />
 
     <span class="checkbox-base__toggle">
@@ -20,41 +21,61 @@
 
 <script setup>
 const props = defineProps({
-  modelValue: {
-    type: String
+  value: {
+    type: [String, Number],
+    default: ''
+  },
+  checked: {
+    type: Boolean,
+    default: false
   },
   name: {
     type: String
+  },
+  group: {
+    type: String,
+    default: ''
   }
 });
 
-const emit = defineEmits([
-  'update:modelValue'
+const emits = defineEmits([
+  'change'
 ]);
+
+const change = event => {
+  const type = 'checkbox';
+  const target = event.target;
+  const value = target.value;
+  const checked = target.checked;
+  const group = props.group;
+
+  emits('change', {
+    value,
+    checked,
+    group,
+    type
+  });
+}
 </script>
 
 <style lang="scss" scoped>
 .checkbox-base {
-  $rs: &;
   display: inline-block;
-  line-height: 0;
-  vertical-align: middle;
-  margin: 0;
-  padding: 0;
   min-width: 20px;
   min-height: 20px;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
   position: relative;
-  overflow: hidden;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .5s ease 0s;
 
   &__field {
     opacity: 0;
     position: absolute;
-    left: -100px;
+    left: -100vw;
     z-index: -1;
-
-    &:checked ~ #{$rs}__toggle-icon {
-      opacity: 1;
-    }
   }
 
   &__toggle {
@@ -63,13 +84,9 @@ const emit = defineEmits([
     background: rgba(53, 151, 64, 0.08);
     border: 1px solid $color-primary;
     border-radius: 6px;
-    cursor: pointer;
-    opacity: 1;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
-    transition: opacity .5s ease 0s;
   }
 
   &__toggle-icon {
@@ -77,24 +94,27 @@ const emit = defineEmits([
     height: 15px;
     fill: $color-primary;
     position: absolute;
-    top: 1px;
+    top: 2px;
     left: 2px;
     opacity: 0;
     transition: opacity .5s ease 0s;
   }
 
   &__title {
+    display: block;
     font-weight: 400;
     font-size: 14px;
     line-height: 1.4;
     color: $color-extra;
-    padding-left: 25px;
+    padding: 2px 0 0 25px;
   }
 
   &:hover {
-    #{$rs}__toggle {
-      opacity: .7;
-    }
+    opacity: .7;
+  }
+
+  &__field:checked ~ &__toggle > &__toggle-icon {
+    opacity: 1;
   }
 }
 </style>

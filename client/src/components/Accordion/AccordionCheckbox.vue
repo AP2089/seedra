@@ -6,6 +6,10 @@
     >
       <CheckboxBase
         :name="option.name"
+        :value="option.id"
+        :checked="option.checked"
+        :group="group"
+        @change="$emit('checkboxChange', $event)"
       />
     </div>
   </div> 
@@ -18,6 +22,9 @@ const props = defineProps({
   options: {
     type: Array,
     required: true
+  },
+  group: {
+    type: String
   }
 });
 </script>

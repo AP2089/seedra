@@ -14,7 +14,8 @@
       :class="inputClasses"
       :value="modelValue"
       :placeholder="placeholder"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :readonly="readonly"
+      @input="inputChange"
     />
 
     <input
@@ -23,7 +24,8 @@
       :class="inputClasses"
       :value="modelValue"
       :placeholder="placeholder"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :readonly="readonly"
+      @input="inputChange"
     />
 
     <Message
@@ -44,16 +46,21 @@ const props = defineProps({
     type: String
   },
   modelValue: {
-    type: String
+    type: [String, Number]
   },
   placeholder: {
     type: String
   },
   validation: {
-    type: Object
+    type: Object,
+    default: {}
   },
   mask: {
     type: String
+  },
+  readonly: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -67,10 +74,18 @@ const inputClasses = computed(() => {
     {error: props.validation.$dirty && props.validation.$invalid}
   ];
 });
+
+const inputChange = (event) => {
+  const value = event.target.value;
+
+  emit('update:modelValue', value);
+}
 </script>
 
 <style lang="scss" scoped>
 .inputbox-base {
+  $rs: &;
+
   &__label {
     font-weight: 400;
     font-size: 14px;
@@ -101,6 +116,17 @@ const inputClasses = computed(() => {
     &.error {
       border-color: $color-danger;
       color: $color-danger;
+    }
+
+    &[readonly] {
+      border-color: $color-secondary !important;
+    }
+  }
+
+  &_sm {
+    #{$rs}__field {
+      height: 40px;
+      padding: 0 10px;
     }
   }
 }

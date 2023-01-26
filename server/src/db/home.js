@@ -28,7 +28,7 @@ const data = {
     oldPrice: '15.56',
     image: '/uploads/03.png',
     imageWebp: '/uploads/03.webp',
-    url: '/'
+    url: '/product/1'
   },
   bannerExtra: {
     title: 'We sell seeds',

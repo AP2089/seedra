@@ -1,22 +1,18 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useHead } from 'unhead';
-import { errorClearTimeout } from '@/config';
 import axios from '@/axios';
 import router from '@/router';
-import debounce from '@/helpers/debounce';
+import useFeatchEvent from '@/hooks/useFeatchEvent';
 
 const useArticleStore = defineStore('articleStore', () => {
+  const { isLoading, error, loading, unload, loaded, setMeta } = useFeatchEvent();
   const title = ref('');
   const date = ref('');
   const content = ref('');
-  const isLoading = ref(false);
-  const error = ref('');
 
   const dataFeatch = async () => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
       const { data } = await axios.get('/article', {
         params: {
@@ -24,18 +20,14 @@ const useArticleStore = defineStore('articleStore', () => {
         }
       });
 
-      useHead(data.meta);
+      setMeta(data.meta);
       title.value = data.title;
       date.value = data.date;
       content.value = data.content;
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
 

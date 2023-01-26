@@ -1,40 +1,37 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
-import { useHead } from 'unhead';
-import { errorClearTimeout } from '@/config';
 import axios from '@/axios';
-import debounce from '@/helpers/debounce';
+import useFeatchItems from '@/hooks/useFeatchItems';
 import useGlobalStore from '@/stores/globalStore';
 
 const useFavoritesStore = defineStore('favoritesStore', () => {
+  const { isLoading, error, pageCount, loading, unload, loaded, setOptions, setUrlParams } = useFeatchItems();
   const globalStore = useGlobalStore();
   const title = ref('');
   const initialItems = ref([]);
-  const isLoading = ref(false);
-  const error = ref('');
 
-  const dataFeatch = async () => {
+  const dataFeatch = async (pageNumber = null) => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
-      const { data } = await axios.get('/favorites', {
+      const setParams = setUrlParams({
+        _page: pageNumber
+      });
+
+      const { data, headers } = await axios.get('/favorites', {
         params: {
+          ...setParams,
           id: globalStore.likeAdded
         }
       });
 
-      useHead(data.meta);
+      setOptions(data.meta, headers['x-total-count']);
       title.value = data.title;
       initialItems.value = data.items;
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
 
@@ -49,6 +46,7 @@ const useFavoritesStore = defineStore('favoritesStore', () => {
     items,
     isLoading,
     error,
+    pageCount,
     dataFeatch
   }
 });

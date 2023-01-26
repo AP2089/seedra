@@ -14,6 +14,8 @@
       >
         <Accordion
           :items="catalogStore.filter"
+          @checkboxChange="catalogStore.filterChange"
+          @rangeChange="catalogStore.filterChange"
         />
       </FilterBase>
     </template>

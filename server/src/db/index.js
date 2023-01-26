@@ -9,6 +9,10 @@ const contacts = require('./contacts');
 const message = require('./message');
 const catalog = require('./catalog');
 const favorites = require('./favorites');
+const product = require('./product');
+const cart = require('./cart');
+const order = require('./order');
+const search = require('./search');
 
 const data = {
   meta,
@@ -21,7 +25,11 @@ const data = {
   contacts,
   message,
   catalog,
-  favorites
+  favorites,
+  product,
+  cart,
+  order,
+  search
 }
 
 const request = {};

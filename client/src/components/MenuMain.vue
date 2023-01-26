@@ -39,6 +39,7 @@ const props = defineProps({
   &__item {
     margin: 0 15px 0 0;
     padding: 0 16px 0 0;
+    line-height: 1.2;
     position: relative;
 
     &:after {
@@ -66,7 +67,6 @@ const props = defineProps({
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 1.7;
     color: $color-extra;
     text-decoration: none;
     text-transform: uppercase;

@@ -1,46 +1,39 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useHead } from 'unhead';
-import { errorClearTimeout } from '@/config';
+import { messageClearTimeout } from '@/config';
 import axios from '@/axios';
 import debounce from '@/helpers/debounce';
+import useFeatchEvent from '@/hooks/useFeatchEvent';
 
 const useContactsStore = defineStore('contactsStore', () => {
+  const { isLoading, error, loading, unload, loaded, setMeta } = useFeatchEvent();
   const title = ref('');
   const description = ref('');
   const phone = ref('');
   const email = ref('');
-  const isLoading = ref(false);
-  const error = ref('');
   const message = ref('');
 
   const dataFeatch = async () => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
       const { data } = await axios.get('/contacts');
 
-      useHead(data.meta);
+      setMeta(data.meta);
       title.value = data.title;
       description.value = data.description;
       phone.value = data.phone;
       email.value = data.email;
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      unload();
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
 
   const formSubmit = async (formData) => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
       const { data } = await axios.patch('/message', {
         data: formData
@@ -50,15 +43,11 @@ const useContactsStore = defineStore('contactsStore', () => {
 
       debounce(() => {
         message.value = '';
-      }, errorClearTimeout);
+      }, messageClearTimeout);
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
 

@@ -1,51 +1,92 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
-import { useHead } from 'unhead';
-import { errorClearTimeout } from '@/config';
+import { filterFetchTimeout } from '@/config';
 import axios from '@/axios';
 import debounce from '@/helpers/debounce';
-import usePaginationUrlParams from '@/hooks/usePaginationUrlParams';
+import useFeatchItems from '@/hooks/useFeatchItems';
 
 const useCatalogStore = defineStore('catalogStore', () => {
+  const { isLoading, error, pageCount, loading, unload, loaded, setOptions, setUrlParams } = useFeatchItems();
   const items = ref([]);
   const filter = ref([]);
-  const totalCount = ref(0);
-  const limit = ref(9);
-  const isLoading = ref(false);
-  const error = ref('');
+  const priceTo = ref(null);
 
-  const dataFeatch = async (pageNumber) => {
+  const params = ref({
+    _page: null,
+    category: [],
+    seedType: [],
+    price_lte: null
+  });
+
+  const dataFeatch = async (pageNumber = null) => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
+      params.value._page = pageNumber;
 
-      const params = usePaginationUrlParams({
-        _page: pageNumber,
-        _limit: limit.value
-      });
+      if (priceTo.value === params.value.price_lte) {
+        params.value.price_lte = null;
+      }
+
+      const setParams = setUrlParams(params.value);
+
+      filterSetCheck(setParams);
 
       const { data, headers } = await axios.get('/catalog', {
-        params
+        params: setParams
       });
 
-      useHead(data.meta);
       items.value = data.items;
-      filter.value = data.filter;
-      totalCount.value =  Number(headers['x-total-count']);
-    } catch ({message}) {
-      error.value = message;
+      setOptions(data.meta, headers['x-total-count']);
 
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      if (!params.value._page) {
+        filter.value = data.filter;
+        priceTo.value = filter.value.reduce((a, e) => e.group === 'price_lte' && (e.to), null);
+        filterSetCheck(setParams);
+        filterSetInitialOptions(setParams);
+      }
+    } catch ({message}) {
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
+  
+  const filterSetCheck = (data) => {
+    filter.value.forEach(e => {
+      return data.hasOwnProperty(e.group) ? e.selected = true : e.selected = false;
+    });
+  }
 
-  const pageCount = computed(() => {
-    return Math.ceil(totalCount.value / limit.value);
-  });
+  const filterSetInitialOptions = (data) => {
+    filter.value.forEach(element => {
+      const queryParam = data[element.group];
+
+      if (queryParam) {
+        params.value[element.group] = queryParam;
+
+        if (element.type === 'checkbox') {
+          element.options.forEach(e => queryParam.includes(e.id) && (e.checked = true));
+        } else if (element.type === 'range') {
+          element.to = queryParam;
+        }
+      }
+    });
+  }
+
+  const filterChange = (data) => {
+    if (data.type === 'checkbox') {
+      const array = params.value[data.group];
+      const value = Number(data.value);
+
+      params.value[data.group] = array.includes(value) ? array.filter(i => i !== value) : [...array, value];
+    } else if (data.type === 'range') {
+      params.value[data.group] = Number(data.value);
+    }
+
+    debounce(() => {
+      dataFeatch(1);
+    }, filterFetchTimeout);
+  }
 
   return {
     items,
@@ -53,7 +94,8 @@ const useCatalogStore = defineStore('catalogStore', () => {
     pageCount,
     isLoading,
     error,
-    dataFeatch
+    dataFeatch,
+    filterChange
   }
 });
 

@@ -17,7 +17,7 @@
 
     <Products
       :title="$t('our.products')"
-      moreUrl="/products"
+      moreUrl="/catalog"
       :items="homeStore.products"
     />
 

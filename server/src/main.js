@@ -24,7 +24,7 @@ router.render = (req, res) => {
   const result = res.locals.data;
   let response = db.response[pathname];
 
-  if (/^blog|article|catalog|favorites$/.test(pathname)) {
+  if (/^blog|article|catalog|favorites|product|cart|search$/.test(pathname)) {
     response = db.response[pathname](result);
   }
 

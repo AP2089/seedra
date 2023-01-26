@@ -18,7 +18,10 @@
 
           <SearchMain
             class="header__search-main"
-            v-model="searchVal"
+            v-model="searchStore.phrase"
+            :items="searchStore.items"
+            :isLoading="searchStore.isLoadingSearch"
+            @choos="searchStore.choos"
           />
 
           <div class="header__services">
@@ -30,7 +33,7 @@
             />
 
             <ButtonService
-              url="/"
+              url="/cart"
               icon="cart"
               :count="globalStore.cartAdded.length"
               class="header__service"
@@ -43,17 +46,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import useMetaStore from '@/stores/metaStore';
 import MenuMain from '@/components/MenuMain';
 import MenuSocial from '@/components/MenuSocial';
 import SearchMain from '@/components/SearchMain';
 import ButtonService from '@/components/ui/ButtonService';
 import useGlobalStore from '@/stores/globalStore';
+import useSearchStore from '@/stores/searchStore';
 
-const searchVal = ref('');
 const metaStore = useMetaStore();
 const globalStore = useGlobalStore();
+const searchStore = useSearchStore();
 </script>
 
 <style lang="scss" scoped>

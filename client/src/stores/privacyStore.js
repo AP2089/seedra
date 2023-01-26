@@ -1,34 +1,26 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useHead } from 'unhead';
-import { errorClearTimeout } from '@/config';
 import axios from '@/axios';
-import debounce from '@/helpers/debounce';
+import useFeatchEvent from '@/hooks/useFeatchEvent';
 
 const usePrivacyStore = defineStore('privacyStore', () => {
+  const { isLoading, error, loading, unload, loaded, setMeta } = useFeatchEvent();
   const title = ref('');
   const content = ref('');
-  const isLoading = ref(false);
-  const error = ref('');
 
   const dataFeatch = async () => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
       const { data } = await axios.get('/privacy');
 
-      useHead(data.meta);
+      setMeta(data.meta);
       title.value = data.title;
       content.value = data.content;
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
 

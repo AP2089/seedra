@@ -1,15 +1,12 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import axios from '@/axios';
-import { errorClearTimeout } from '@/config';
-import { useHead } from 'unhead';
-import debounce from '@/helpers/debounce';
+import useFeatchEvent from '@/hooks/useFeatchEvent';
 
 const useHomeStore = defineStore('homeStore', () => {
+  const { isLoading, error, loading, unload, loaded, setMeta } = useFeatchEvent();
   const products = ref([]);
   const blog = ref([]);
-  const isLoading = ref(false);
-  const error = ref('');
   
   const bannerMain = ref({
     title: '',
@@ -40,12 +37,11 @@ const useHomeStore = defineStore('homeStore', () => {
 
   const dataFeatch = async () => {
     try {
-      isLoading.value = true;
-      error.value = '';
+      loading();
 
       const { data } = await axios.get('/home');
 
-      useHead(data.meta);
+      setMeta(data.meta);
       specification.value = data.specification;
       reviews.value = data.reviews;
       bannerMain.value = data.bannerMain;
@@ -53,13 +49,9 @@ const useHomeStore = defineStore('homeStore', () => {
       products.value = data.products;
       blog.value = data.blog;
     } catch ({message}) {
-      error.value = message;
-
-      debounce(() => {
-        error.value = '';
-      }, errorClearTimeout);
+      unload(message);
     } finally {
-      isLoading.value = false;
+      loaded();
     }
   }
 

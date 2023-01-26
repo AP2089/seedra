@@ -9,4 +9,6 @@ export const clientUrl = VITE_APP_CLIENT_URL;
 export const serverUrl = VITE_APP_SERVER_URL;
 export const apiUrl = VITE_APP_API_URL;
 export const locale = VITE_APP_LOCALE;
-export const errorClearTimeout = 3000;
+export const messageClearTimeout = 3000;
+export const filterFetchTimeout = 500;
+export const searchFetchTimeout = 500;
