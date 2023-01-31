@@ -58,12 +58,20 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .cart {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 
   &__body {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    @include media('min', $viewport-post-md) {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
   }
 }
 </style>

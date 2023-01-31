@@ -103,8 +103,15 @@ const globalStore = useGlobalStore();
 .product {
   border: 2px solid $color-secondary;
   border-radius: 8px;
-  padding: 28px;
   position: relative;
+
+  @include media('min', $viewport-post-md) {
+    padding: 28px;
+  }
+  
+  @include media('max', $viewport-md) {
+    padding: 15px;
+  }
 
   &__btn-like {
     position: absolute;
@@ -114,7 +121,9 @@ const globalStore = useGlobalStore();
   }
 
   &__media {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     opacity: 1;
     margin-bottom: 30px;
@@ -137,9 +146,16 @@ const globalStore = useGlobalStore();
   &__title {
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
     line-height: 25px;
     margin-bottom: 10px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 
   &__title-link {
@@ -161,7 +177,7 @@ const globalStore = useGlobalStore();
 
   &__cost {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
   }
 
@@ -170,24 +186,39 @@ const globalStore = useGlobalStore();
     height: 24px;
     fill: $color-danger;
     margin-right: 5px;
+    margin-bottom: -2px;
   }
 
   &__price {
     font-style: normal;
     font-weight: 600;
-    font-size: 28px;
     line-height: 1;
     color: $color-global;
     margin-right: 10px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 28px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 16px;
+    }
   }
 
   &__price-old {
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
     line-height: 1;
     color: $color-extra;
     text-decoration: line-through;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 }
 </style>

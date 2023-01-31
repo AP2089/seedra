@@ -64,28 +64,38 @@ const setItemClasess = () => {
   $rs: &;
 
   &__list {
-    display: grid; 
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: minmax(300px, auto);
-    gap: 30px 30px;
+    @include media('min', $viewport-post-sm) {
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-auto-rows: minmax(300px, auto);
+      gap: 30px 30px;
+    }
   }
 
   &__item {
     position: relative;
     background-color: $color-base;
     border-radius: 12px;
-    padding: 30px;
     overflow: hidden;
 
-    &:nth-child(9n+1) { grid-area: 1 / 1 / 2 / 3; }
-    &:nth-child(9n+2) { grid-area: 1 / 3 / 3 / 4; }
-    &:nth-child(9n+3) { grid-area: 2 / 1 / 3 / 2; }
-    &:nth-child(9n+4) { grid-area: 2 / 2 / 3 / 3; }
-    &:nth-child(9n+5) { grid-area: 3 / 1 / 4 / 3; }
-    &:nth-child(9n+6) { grid-area: 3 / 3 / 4 / 4; }
-    &:nth-child(9n+7) { grid-area: 4 / 1 / 6 / 2; }
-    &:nth-child(9n+8) { grid-area: 4 / 2 / 6 / 3; }
-    &:nth-child(9n+9) { grid-area: 4 / 3 / 6 / 4; }
+    @include media('min', $viewport-post-sm) {
+      padding: 30px;
+
+      &:nth-child(9n+1) { grid-area: 1 / 1 / 2 / 3; }
+      &:nth-child(9n+2) { grid-area: 1 / 3 / 3 / 4; }
+      &:nth-child(9n+3) { grid-area: 2 / 1 / 3 / 2; }
+      &:nth-child(9n+4) { grid-area: 2 / 2 / 3 / 3; }
+      &:nth-child(9n+5) { grid-area: 3 / 1 / 4 / 3; }
+      &:nth-child(9n+6) { grid-area: 3 / 3 / 4 / 4; }
+      &:nth-child(9n+7) { grid-area: 4 / 1 / 6 / 2; }
+      &:nth-child(9n+8) { grid-area: 4 / 2 / 6 / 3; }
+      &:nth-child(9n+9) { grid-area: 4 / 3 / 6 / 4; }
+    }
+    
+    @include media('max', $viewport-sm) {
+      padding: 15px;
+      margin-bottom: 15px;
+    }
   }
 
   &__wrap {
@@ -126,9 +136,16 @@ const setItemClasess = () => {
 
   &__title {
     font-weight: 600;
-    font-size: 24px;
     line-height: 1.4;
     margin-bottom: 10px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 24px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 18px;
+    }
   }
 
   &__title-link {

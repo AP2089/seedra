@@ -3,7 +3,14 @@
   flex-direction: column;
   min-height: 100%;
   position: relative;
-  padding: 102px 0 0 0;
+
+  @include media('min', $viewport-post-md) {
+    padding: 102px 0 0 0;
+  }
+  
+  @include media('max', $viewport-md) {
+    padding: 75px 0 0 0;
+  }
 }
 
 .middle {

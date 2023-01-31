@@ -39,12 +39,13 @@ const pageChange = (pageNumber) => {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  flex-wrap: wrap;
   margin: 0;
   padding: 30px 0 0 0;
   list-style: none;
 
   .page-item {
-    margin: 0 4px;
+    margin: 1px 4px;
     padding: 0;
     font-weight: 400;
     font-size: 14px;

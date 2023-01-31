@@ -24,8 +24,16 @@ body {
   font-style: normal;
   font-weight: 400;
   color: $color-global;
-  font-size: 16px;
-  line-height: 1.7;
+
+  @include media('min', $viewport-post-md) {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  
+  @include media('max', $viewport-md) {
+    font-size: 14px;
+    line-height: 1.4;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {

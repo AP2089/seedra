@@ -51,6 +51,12 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .blog {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 }
 </style>

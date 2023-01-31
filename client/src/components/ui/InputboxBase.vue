@@ -101,12 +101,21 @@ const inputChange = (event) => {
     border-radius: 4px;
     font-style: normal;
     font-weight: 300;
-    font-size: 16px;
     color: $color-extra;
-    height: 56px;
-    padding: 0 25px;
     outline: none;
     transition: border-color .5s ease 0s, color .5s ease 0s;
+
+    @include media('min', $viewport-post-md) {
+      height: 56px;
+      padding: 0 25px;
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      height: 40px;
+      padding: 0 15px;
+      font-size: 14px;
+    }
 
     &:hover,
     &:focus {
@@ -125,8 +134,10 @@ const inputChange = (event) => {
 
   &_sm {
     #{$rs}__field {
-      height: 40px;
-      padding: 0 10px;
+      @include media('min', $viewport-post-md) {
+        height: 40px;
+        padding: 0 10px;
+      }
     }
   }
 }

@@ -35,7 +35,14 @@ const props = defineProps([
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+
+    @include media('min', $viewport-post-md) {
+      margin-bottom: 20px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-bottom: 15px;
+    }
   }
 
   &__title {

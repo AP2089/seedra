@@ -1,5 +1,5 @@
 <template>
-  <LayoutBase>
+  <LayoutMain>
     <BannerPrimary
       :title="articleStore.title"
     />
@@ -8,12 +8,12 @@
       :date="articleStore.date"
       :html="articleStore.content"
     />
-  </LayoutBase>
+  </LayoutMain>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
-import LayoutBase from '@/components/LayoutBase';
+import LayoutMain from '@/components/LayoutMain';
 import Content from '@/components/Content';
 import BannerPrimary from '@/components/BannerPrimary';
 import useArticleStore from '@/stores/articleStore';

@@ -63,19 +63,34 @@ const rightBg = useImageFormat(rightBgAny, rightBgWebp);
 
 <style lang="scss" scoped>
 .contacts {
-  border-radius: 24px;
   background-color: $color-base;
   background-position: left top;
   background-repeat: no-repeat;
-  margin-bottom: 50px;
+
+  @include media('min', $viewport-post-md) {
+    border-radius: 24px;
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    border-radius: 18px;
+    margin-bottom: 30px;
+  }
 
   &__inner {
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-start;
-    padding: 30px 40px;
     background-position: right top;
     background-repeat: no-repeat;
+
+    @include media('min', $viewport-post-sm) {
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+      padding: 30px 40px;
+    }
+    
+    @include media('max', $viewport-sm) {
+      padding: 15px;
+    }
   }
 }
 </style>

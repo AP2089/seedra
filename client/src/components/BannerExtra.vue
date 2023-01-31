@@ -40,7 +40,13 @@ const rightBg = useImageFormat(rightBgAny, rightBgWebp);
 
 <style lang="scss" scoped>
 .banner-extra {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 
   &__wrap {
     background: rgba(255, 230, 46, 0.09);
@@ -54,24 +60,45 @@ const rightBg = useImageFormat(rightBgAny, rightBgWebp);
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 25px;
     min-height: 104px;
     background-repeat: no-repeat;
     background-position: right bottom;
+
+    @include media('min', $viewport-post-md) {
+      padding: 25px;
+    }
+    
+    @include media('max', $viewport-md) {
+      padding: 15px;
+    }
   }
 
   &__heading {
     font-weight: 600;
-    font-size: 24px;
     line-height: 1;
     margin-bottom: 10px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 24px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 20px;
+    }
   }
 
   &__description {
     font-weight: 500;
-    font-size: 16px;
     line-height: 1.7;
     color: $color-extra;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 }
 </style>

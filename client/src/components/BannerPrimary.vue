@@ -41,7 +41,7 @@ const props = defineProps({
   },
   description: {
     type: String
-  },
+  }
 });
 
 const leftBg = useImageFormat(leftBgAny, leftBgWebp);
@@ -55,9 +55,16 @@ const rightBg = useImageFormat(rightBgAny, rightBgWebp);
 
   &__wrap {
     background-color: $color-base;
-    border-radius: 24px;
     background-repeat: no-repeat;
     background-position: left bottom;
+
+    @include media('min', $viewport-post-md) {
+      border-radius: 24px;
+    }
+    
+    @include media('max', $viewport-md) {
+      border-radius: 12px;
+    }
   }
 
   &__inner {
@@ -65,27 +72,49 @@ const rightBg = useImageFormat(rightBgAny, rightBgWebp);
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 25px;
-    min-height: 250px;
     background-repeat: no-repeat;
     background-position: right top;
+
+    @include media('min', $viewport-post-md) {
+      padding: 25px;
+      min-height: 250px;
+    }
+    
+    @include media('max', $viewport-md) {
+      padding: 15px;
+      min-height: 100px;
+    }
   }
 
   &__heading {
     font-weight: 600;
-    font-size: 48px;
     line-height: 1;
     margin-bottom: 15px;
     max-width: 700px;
     text-align: center;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 48px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 20px;
+    }
   }
 
   &__description {
     font-weight: 300;
-    font-size: 16px;
     line-height: 1.7;
     max-width: 700px;
     text-align: center;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 }
 </style>

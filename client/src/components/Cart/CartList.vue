@@ -61,10 +61,16 @@
           />
         </div>
         <div class="cart__list-cell">
-          <div class="cart__list-price">{{ globalStore.currencySymbol }}{{ item.price }}</div>
+          <div class="cart__list-price">
+            <span class="cart__list-title-mobile">{{ $t('price') }}</span>
+            {{ globalStore.currencySymbol }}{{ item.price }}
+          </div>
         </div>
         <div class="cart__list-cell">
-          <div class="cart__list-price">{{ globalStore.currencySymbol }}{{ item.priceTotal }}</div>
+          <div class="cart__list-price">
+            <span class="cart__list-title-mobile">{{ $t('total') }}</span>
+            {{ globalStore.currencySymbol }}{{ item.priceTotal }}
+          </div>
         </div>
       </div>
     </div>
@@ -96,7 +102,13 @@ const globalStore = useGlobalStore();
   $rs: &;
 
   &__list {
-    width: 70%;
+    @include media('min', $viewport-post-md) {
+      width: 70%;
+    }
+
+    @include media('max', $viewport-md) {
+      margin-bottom: 30px;
+    }
   }
 
   &__list-heading {
@@ -108,24 +120,53 @@ const globalStore = useGlobalStore();
   }
 
   &__list-row {
-    display: grid; 
-    grid-template-columns: 3fr 1fr 1fr 1fr; 
-    grid-template-rows: 1fr; 
-    align-items: center;
-    gap: 0px 30px;
     border-bottom: 1px solid $color-secondary;
     padding-bottom: 10px;
     margin-bottom: 10px;
+
+    @include media('min', $viewport-post-md) {
+      display: grid; 
+      grid-template-columns: 3fr 1fr 1fr 1fr; 
+      grid-template-rows: 1fr; 
+      align-items: center;
+      gap: 0px 30px;
+    }
+    
+    @include media('max', $viewport-md) {
+      &:first-child {
+        display: none;
+      }
+    }
+  }
+
+  &__list-cell {
+    @include media('max', $viewport-md) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   &__list-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    @include media('min', $viewport-post-md) {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
   }
 
   &__list-media {
     position: relative;
+
+    @include media('max', $viewport-md) {
+      max-width: 62px;
+      margin: 0 auto 10px;
+    }
   }
 
   &__list-link {
@@ -173,11 +214,28 @@ const globalStore = useGlobalStore();
   &__list-price {
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 18px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 
   &__list-pagination {
     padding-top: 10px;
+  }
+
+  &__list-title-mobile {
+    @include media('min', $viewport-post-md) {
+      display: none;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-weight: 300;
+    }
   }
 }
 </style>

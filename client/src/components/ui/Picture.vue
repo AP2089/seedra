@@ -31,7 +31,7 @@ const props = defineProps({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 img {
   display: block;
   max-width: 100%;

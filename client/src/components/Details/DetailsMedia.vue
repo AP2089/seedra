@@ -109,7 +109,15 @@ const onHide = () => visibleRef.value = false;
 <style lang="scss" scoped>
 .details {
   &__media {
-    width: 40%;
+    @include media('min', $viewport-post-md) {
+      width: 40%;
+    }
+    
+    @include media('max', $viewport-md) {
+      max-width: 250px;
+      margin: 0 auto 30px;
+      order: 1;
+    }
   }
 
   &__media-main {

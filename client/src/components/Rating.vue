@@ -47,12 +47,20 @@ const props = defineProps({
   justify-content: flex-start;
 
   &__icon {
-    width: 24px;
-    height: 24px;
     margin-right: 1px;
     fill: #FFFFFF;
     stroke: $color-info;
     stroke-width: 2;
+
+    @include media('min', $viewport-post-md) {
+      width: 24px;
+      height: 24px;
+    }
+    
+    @include media('max', $viewport-md) {
+      width: 16px;
+      height: 16px; 
+    }
 
     &.active {
       fill: $color-info;

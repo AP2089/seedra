@@ -62,42 +62,73 @@ const globalStore = useGlobalStore();
 <style lang="scss" scoped>
 .details {
   &__panel {
-    width: 60%;
-    padding-left: 50px;
+    @include media('min', $viewport-post-md) {
+      width: 60%;
+      padding-left: 50px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-bottom: 30px;
+    }
   }
 
   &__core {
-    max-width: 540px;
+    @include media('min', $viewport-post-md) {
+      max-width: 540px;
+    }
   }
 
   &__title {
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
     line-height: 1.4;
     margin: 0 0 15px 0;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 24px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 18px;
+    }
   }
 
   &__info-set {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     margin: 0 0 15px 0;
+
+    @include media('min', $viewport-post-sm) {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
   }
 
   &__info-set-item {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 180px;
     border-radius: 119px;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
     line-height: 1;
     margin-right: 10px;
     text-transform: uppercase;
     padding: 7px 10px;
+
+    @include media('min', $viewport-post-md) {
+      width: 180px;
+      font-size: 14px;
+    }
+    
+    @include media('max', $viewport-md) {
+      width: 150px;
+      font-size: 12px;
+      margin-bottom: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
 
     &_available {
       border: 1px solid $color-secondary;
@@ -124,9 +155,16 @@ const globalStore = useGlobalStore();
   &__description {
     font-style: normal;
     font-weight: 300;
-    font-size: 16px;
     line-height: 1.7;
     margin: 0 0 15px 0;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 
   &__set {
@@ -142,18 +180,32 @@ const globalStore = useGlobalStore();
   &__price-old {
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
     line-height: 1;
     color: $color-extra;
     text-decoration: line-through;
     margin-bottom: 5px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 
   &__price-current {
     font-style: normal;
     font-weight: 600;
-    font-size: 28px;
     line-height: 1;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 28px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 22px;
+    }
   }
 
   &__control {

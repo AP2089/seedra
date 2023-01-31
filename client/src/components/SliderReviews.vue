@@ -6,7 +6,6 @@
 
     <swiper
       :modules="modules"
-      :slides-per-view="3"
       :space-between="30"
       :centeredSlides="true"
       :pagination="{
@@ -15,11 +14,16 @@
       :scrollbar="{
         draggable: true
       }"
-      :autoplay='{
+      :autoplay="{
         delay: 2500,
         disableOnInteraction: false,
         pauseOnMouseEnter: true
-      }'
+      }"
+      :breakpoints="{
+        800: {
+          slidesPerView: 3
+        }
+      }"
     >
       <swiper-slide
         v-for="item in items"
@@ -73,7 +77,13 @@ const modules = computed(() => {
 
 <style lang="scss" scoped>
 .slider-reviews {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 
   &__heading {
     text-align: center;
@@ -84,32 +94,63 @@ const modules = computed(() => {
     border: 1px solid #EFEFEF;
     box-shadow: 0px 4px 21px rgba(209, 209, 209, 0.25);
     border-radius: 12px;
-    padding: 35px;
+
+    @include media('min', $viewport-post-md) {
+      padding: 35px;
+    }
+    
+    @include media('max', $viewport-md) {
+      padding: 15px;
+    }
   }
 
   &__head {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 20px;
+    @include media('min', $viewport-post-md) {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-bottom: 15px;
+    }
   }
 
   &__image {
-    flex: 0 0 64px;
     overflow: hidden;
     border-radius: 50%;
+
+    @include media('min', $viewport-post-md) {
+      flex: 0 0 64px;
+    }
+
+    @include media('max', $viewport-md) {
+      display: block;
+      width: 64px;
+      margin-bottom: 5px;
+    }
   }
 
   &__info {
-    flex: 1;
-    padding-left: 24px;
+    @include media('min', $viewport-post-md) {
+      flex: 1;
+      padding-left: 24px;
+    }
   }
 
   &__title {
     font-weight: 500;
-    font-size: 18px;
     line-height: 1.4;
     margin-right: 10px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 18px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 16px;
+    }
   }
 
   &__date {
@@ -125,8 +166,15 @@ const modules = computed(() => {
 
   &__description {
     font-weight: 300;
-    font-size: 16px;
     line-height: 1.7;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 
   :deep(.swiper) {

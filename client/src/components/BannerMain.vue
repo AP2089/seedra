@@ -97,67 +97,137 @@ const wrapBg = useImageFormat(wrapBgAny, wrapBgWebp);
     align-items: stretch;
     justify-content: flex-start;
     background: $color-base;
-    border-radius: 24px;
-    padding: 50px 70px;
     background-repeat: no-repeat;
     background-position: right bottom;
+
+    @include media('min', $viewport-post-md) {
+      border-radius: 24px;
+      padding: 50px 70px;
+    }
+    
+    @include media('max', $viewport-md) {
+      border-radius: 14px;
+      padding: 20px;
+    }
   }
 
   &__content {
-    width: 70%;
-    padding-right: 30px;
+    @include media('min', $viewport-post-sm) {
+      width: 70%;
+      padding-right: 30px;
+    }
   }
 
   &__media {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    width: 30%;
+    @include media('min', $viewport-post-sm) {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: 30%;
+    }
+    
+    @include media('max', $viewport-sm) {
+      display: none;
+    }
+  }
+
+  &__media-img {
+    @include media('max', $viewport-md) {
+      max-width: 150px;
+    }
   }
 
   &__heading {
     font-weight: 600;
-    font-size: 48px;
     line-height: 1.1;
-    margin: 0 0 15px 0;
     padding: 0;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 48px;
+      margin: 0 0 15px 0;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 25px;
+      margin: 0 0 10px 0;
+    }
   }
 
   &__description {
     font-weight: 300;
-    font-size: 16px;
     line-height: 1.7;
-    margin-bottom: 20px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
   }
 
   &__info {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
-    margin-bottom: 25px;
+
+    @include media('min', $viewport-post-md) {
+      margin-bottom: 25px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-bottom: 15px;
+    }
   }
 
   &__icon-hot {
-    width: 46px;
-    height: 46px;
     fill: $color-danger;
-    margin-right: 15px;
+
+    @include media('min', $viewport-post-md) {
+      width: 46px;
+      height: 46px;
+      margin-right: 15px;
+    }
+    
+    @include media('max', $viewport-md) {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
   }
 
   &__price {
     font-weight: 600;
-    font-size: 42px;
     line-height: 1;
-    margin-right: 20px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 42px;
+      margin-right: 20px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 24px;
+      margin-right: 10px;
+    }
   }
 
   &__old-price {
     font-style: normal;
     font-weight: 600;
-    font-size: 22px;
     line-height: 1;
     color: $color-extra;
     text-decoration: line-through;
+    padding-bottom: 2px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 22px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 15px;
+    }
   }
 
   &__btn-view {

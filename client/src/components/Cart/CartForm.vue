@@ -73,15 +73,23 @@ const formSubmit = () => {
 <style lang="scss" scoped>
 .cart {
   &__form {
-    width: 30%;
-    padding-left: 50px;
-    position: sticky;
-    top: 75px;
-    left: 0;
+    @include media('min', $viewport-post-md) {
+      width: 30%;
+      padding-left: 50px;
+      position: sticky;
+      top: 75px;
+      left: 0;
+    }
   }
 
   &__form-row {
-    margin-bottom: 20px;
+    @include media('min', $viewport-post-md) {
+      margin-bottom: 20px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-bottom: 15px;
+    }
 
     &:last-child {
       margin-bottom: 0;
@@ -89,7 +97,9 @@ const formSubmit = () => {
   }
 
   &__form-btn {
-    min-width: 150px;
+    @include media('min', $viewport-post-md) {
+      min-width: 150px;
+    }
   }
 }
 </style>

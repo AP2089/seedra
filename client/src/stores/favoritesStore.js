@@ -12,6 +12,8 @@ const useFavoritesStore = defineStore('favoritesStore', () => {
 
   const dataFeatch = async (pageNumber = null) => {
     try {
+      if (globalStore.likeAdded.length === 0) return;
+
       loading();
 
       const setParams = setUrlParams({

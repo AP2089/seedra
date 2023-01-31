@@ -21,9 +21,15 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .filter-base {
-  position: sticky;
-  top: 75px;
-  left: 0;
+  @include media('min', $viewport-post-md) {
+    position: sticky;
+    top: 75px;
+    left: 0;
+  }
+  
+  @include media('max', $viewport-md) {
+    padding-top: 10px;
+  }
 
   &__title {
     font-style: normal;

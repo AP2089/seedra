@@ -34,13 +34,32 @@ const props = defineProps([
 
   &__list {
     display: grid; 
-    grid-auto-rows: 1fr; 
-    grid-template-columns: 1fr 1fr 1fr; 
-    grid-template-rows: 1fr;
-    gap: 30px 30px;
+
+    @include media('min', $viewport-post-sm) {
+      grid-template-columns: 1fr 1fr 1fr; 
+      grid-template-rows: 1fr;
+      gap: 30px 30px;
+    }
+
+    @include media(null, $viewport-post-xs, $viewport-sm) {
+      grid-template-columns: 1fr 1fr; 
+      grid-template-rows: 1fr;
+      gap: 30px 30px;
+    }
+
+    @include media('max', $viewport-xs) {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
 
     #{$rs}_narrow & {
-      gap: 3px 3px;
+      @include media('min', $viewport-post-xs) {
+        gap: 3px 3px;
+      }
+      
+      @include media('max', $viewport-xs) {
+        gap: 3px;
+      }
     }
   }
 }

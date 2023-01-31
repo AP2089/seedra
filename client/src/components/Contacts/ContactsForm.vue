@@ -78,7 +78,9 @@ const formSubmit = () => {
 <style lang="scss" scoped>
 .contacts {
   &__control {
-    width: 50%;
+    @include media('min', $viewport-post-sm) {
+      width: 50%;
+    }
   }
 
   &__form-row {
@@ -96,15 +98,24 @@ const formSubmit = () => {
   }
 
   &__form-submit {
-    flex: 0 0 160px;
+    @include media('min', $viewport-post-sm) {
+      flex: 0 0 160px;
+    }
   }
 
   &__form-caption {
-    margin-left: 20px;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     color: $color-extra;
+
+    @include media('min', $viewport-post-md) {
+      margin-left: 20px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-left: 10px;
+    }
   }
 }
 </style>

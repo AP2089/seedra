@@ -1,10 +1,12 @@
 <template>
-  <DateBase
-    v-if="date"
-    :date="date"
-  />
+  <div class="center">
+    <DateBase
+      v-if="date"
+      :date="date"
+    />
 
-  <div class="content" v-html="html"></div>
+    <div class="content" v-html="html"></div>
+  </div>
 </template>
 
 <script setup>

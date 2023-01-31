@@ -33,7 +33,14 @@ const props = defineProps([
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30px;
+
+    @include media('min', $viewport-post-md) {
+      margin-bottom: 30px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-bottom: 15px;
+    }
   }
 
   &__title {
@@ -41,8 +48,15 @@ const props = defineProps([
   }
 
   &__btn-more {
-    min-width: 170px;
-    margin-left: 30px;
+    @include media('min', $viewport-post-md) {
+      min-width: 170px;
+      margin-left: 30px;
+    }
+    
+    @include media('max', $viewport-md) {
+      min-width: 80px;
+      margin-left: 10px;
+    }
   }
 }
 </style>

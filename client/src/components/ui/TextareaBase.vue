@@ -66,16 +66,25 @@ const textareaClasses = computed(() => {
   &__field {
     display: block;
     width: 100%;
-    height: 135px;
     border: 1px solid $color-secondary;
     border-radius: 4px;
     font-style: normal;
     font-weight: 300;
-    font-size: 16px;
     color: $color-extra;
-    padding: 15px 25px;
     outline: none;
     transition: border-color .5s ease 0s, color .5s ease 0s;
+
+    @include media('min', $viewport-post-md) {
+      height: 135px;
+      font-size: 16px;
+      padding: 15px 25px;
+    }
+    
+    @include media('max', $viewport-md) {
+      height: 80px;
+      font-size: 14px;
+      padding: 15px;
+    }
 
     &:hover,
     &:focus {

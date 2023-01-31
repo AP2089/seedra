@@ -62,6 +62,12 @@ const classesCenter = computed(() => {
 
 <style lang="scss" scoped>
 .products {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 }
 </style>

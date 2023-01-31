@@ -61,13 +61,26 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .details {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 
   &__main {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-bottom: 50px;
+
+    @include media('min', $viewport-post-md) {
+      margin-bottom: 50px;
+    }
+    
+    @include media('max', $viewport-md) {
+      flex-direction: column;
+    }
   }
 }
 </style>

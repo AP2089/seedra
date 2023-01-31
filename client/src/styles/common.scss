@@ -12,10 +12,17 @@
 
 .list-details {
   margin: 0 0 30px 0;
-  padding: 25px;
   list-style: none;
   border: 1px solid $color-secondary;
   border-radius: 15px;
+
+  @include media('min', $viewport-post-md) {
+    padding: 25px;
+  }
+  
+  @include media('max', $viewport-md) {
+    padding: 15px;
+  }
 
   &__item {
     margin: 0 0 10px 0;
@@ -45,8 +52,21 @@
   &__value {
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
     color: $color-global;
     padding-left: 5px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
+  }
+}
+
+.body-mobile-fixed {
+  @include media('max', $viewport-md) {
+    overflow: hidden;
   }
 }

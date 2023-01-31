@@ -53,30 +53,58 @@ const decorBg = useImageFormat(decorBgAny, decorBgWebp);
 
 <style lang="scss" scoped>
 .specification {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 
   &__wrap {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    @include media('min', $viewport-post-md) {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
   }
 
   &__left {
-    width: 50%;
-    padding-right: 30px;
+    @include media('min', $viewport-post-md) {
+      width: 50%;
+      padding-right: 30px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-bottom: 30px;
+    }
   }
 
   &__right {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    width: 50%;
+    @include media('min', $viewport-post-md) {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      width: 50%;
+    }
+
+    @include media('max', $viewport-md) {
+      max-width: 400px;
+      margin: 0 auto;
+    }
   }
 
   &__content {
     font-weight: 300;
-    font-size: 16px;
     line-height: 1.7;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 
   &__decor {

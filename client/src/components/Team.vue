@@ -34,40 +34,52 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .team {
-  margin-bottom: 50px;
+  @include media('min', $viewport-post-md) {
+    margin-bottom: 50px;
+  }
+  
+  @include media('max', $viewport-md) {
+    margin-bottom: 30px;
+  }
 
   &__title {
     font-weight: 600;
-    font-size: 36px;
-    line-height: 54px;
+    line-height: 1.5;
     color: $color-global;
     text-align: center;
-    margin-bottom: 50px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 36px;
+      margin-bottom: 50px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
   }
 
   &__list {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    display: grid; 
+    gap: 20px 20px; 
     max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
+
+    @include media('min', $viewport-post-sm) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    
+    @include media('max', $viewport-sm) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   &__item {
     display: flex;
     align-items: center;
-    width: 25%;
     justify-content: flex-start;
     flex-direction: column;
-    margin: 0 15px;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 
   &__img {
@@ -80,12 +92,15 @@ const props = defineProps({
 
   &__name {
     font-weight: 600;
-    font-size: 22px;
     line-height: 1.5;
-  }
 
-  &__caption {
-
+    @include media('min', $viewport-post-md) {
+      font-size: 22px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 15px;
+    }
   }
 }
 </style>

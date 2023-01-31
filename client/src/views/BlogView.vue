@@ -1,5 +1,5 @@
 <template>
-  <LayoutBase>
+  <LayoutMain>
     <BannerPrimary
       :title="blogStore.title"
       :description="blogStore.description"
@@ -10,12 +10,12 @@
       :paginationPageCount="blogStore.pageCount"
       @paginationChange="blogStore.dataFeatch"
     />
-  </LayoutBase>
+  </LayoutMain>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
-import LayoutBase from '@/components/LayoutBase';
+import LayoutMain from '@/components/LayoutMain';
 import Blog from '@/components/Blog';
 import BannerPrimary from '@/components/BannerPrimary';
 import useBlogStore from '@/stores/blogStore';

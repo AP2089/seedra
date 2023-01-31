@@ -48,35 +48,57 @@ const props = defineProps([
 <style lang="scss" scoped>
 .contacts {
   &__content {
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-start;
-    flex-direction: column;
-    padding-right: 30px;
-    width: 50%;
+    @include media('min', $viewport-post-sm) {
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+      flex-direction: column;
+      padding-right: 30px;
+      width: 50%;
+    }
+    
+    @include media('max', $viewport-sm) {
+      margin-bottom: 30px;
+    }
   }
 
   &__title {
     font-weight: 600;
-    font-size: 48px;
     line-height: 1.2;
     margin-bottom: 15px;
-    max-width: 300px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 48px;
+      max-width: 300px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 20px;
+    }
   }
 
   &__description {
     font-weight: 300;
-    font-size: 16px;
     margin-bottom: 15px;
-    max-width: 300px;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 16px;
+      max-width: 300px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+    }
   }
 
   &__foot {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-direction: column;
-    margin-top: auto;
+    @include media('min', $viewport-post-md) {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-direction: column;
+      margin-top: auto;
+    }
   }
 
   &__link {
@@ -86,10 +108,18 @@ const props = defineProps([
     text-decoration: none;
     color: $color-extra;
     font-weight: 600;
-    font-size: 24px;
     line-height: 1.4;
-    margin-bottom: 20px;
     transition: color .5s ease 0s;
+
+    @include media('min', $viewport-post-md) {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    @include media('max', $viewport-md) {
+      font-size: 14px;
+      margin: 0 10px 10px 0;
+    }
 
     &:hover {
       text-decoration: none;
@@ -107,15 +137,32 @@ const props = defineProps([
     justify-content: center;
     background-color: #FFFFFF;
     border-radius: 15px;
-    margin-right: 20px;
-    width: 56px;
-    height: 56px;
+
+    @include media('min', $viewport-post-md) {
+      margin-right: 20px;
+      width: 56px;
+      height: 56px;
+    }
+    
+    @include media('max', $viewport-md) {
+      margin-right: 10px;
+      width: 25px;
+      height: 25px;
+    }
   }
 
   &__icon {
-    width: 24px;
-    height: 24px;
     fill: $color-primary;
+
+    @include media('min', $viewport-post-md) {
+      width: 24px;
+      height: 24px;
+    }
+    
+    @include media('max', $viewport-md) {
+      width: 15px;
+      height: 15px;
+    }
   }
 }
 </style>
