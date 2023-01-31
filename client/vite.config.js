@@ -7,6 +7,9 @@ import path from 'path';
 const {VITE_APP_SERVER_URL, VITE_APP_CLIENT_PORT} = process.env;
 
 export default defineConfig({
+  build: {
+    outDir: path.resolve(__dirname, '..', 'server', 'public')
+  },
   server: {
     host: 'localhost',
     port: VITE_APP_CLIENT_PORT,

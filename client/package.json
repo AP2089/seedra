@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "serve": "dotenv -e ../.env.development vite",
-    "build": "dotenv -e ../.env.production vite build",
-    "preview": "vite preview"
+    "build": "dotenv -e ../.env.production vite build"
   },
   "dependencies": {
     "@kyvg/vue3-notification": "^2.7.0",
