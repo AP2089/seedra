@@ -66,7 +66,6 @@
 </template>
 
 <script setup>
-import { watch, onMounted } from 'vue';
 import useMetaStore from '@/stores/metaStore';
 import MenuMain from '@/components/MenuMain';
 import MenuSocial from '@/components/MenuSocial';
@@ -81,19 +80,7 @@ const metaStore = useMetaStore();
 const globalStore = useGlobalStore();
 const searchStore = useSearchStore();
 
-const { isActive, isMobile, toggleIsActive } = useDevice();
-
-watch(isActive, (value) => {
-  if (value) {
-    document.body.classList.add('body-mobile-fixed');
-  } else {
-    document.body.classList.remove('body-mobile-fixed');
-  }
-});
-
-onMounted(() => {
-  document.body.classList.remove('body-mobile-fixed');
-});
+const { isActive, isMobile, toggleIsActive } = useDevice(true);
 </script>
 
 <style lang="scss" scoped>
