@@ -5,27 +5,31 @@
         <router-link to="/" class="header__logo">
           <img src="@/images/logo.svg" alt="Seedra" class="header__logo-img" />
         </router-link>
-        <div
-          :class="headerPanelClasses"
-        >
-          <MenuMain
-            :items="metaStore.menuMain"
-            class="header__menu-main"
-          />
 
-          <MenuSocial
-            :items="metaStore.menuSocial"
-            class="header__menu-social"
-          />
+        <Transition name="menu">
+          <div
+            v-if="isActive"
+            class="header__panel"
+          >
+            <MenuMain
+              :items="metaStore.menuMain"
+              class="header__menu-main"
+            />
 
-          <SearchMain
-            class="header__search-main"
-            v-model="searchStore.phrase"
-            :items="searchStore.items"
-            :isLoading="searchStore.isLoadingSearch"
-            @choos="searchStore.choos"
-          />
-        </div>
+            <MenuSocial
+              :items="metaStore.menuSocial"
+              class="header__menu-social"
+            />
+
+            <SearchMain
+              class="header__search-main"
+              v-model="searchStore.phrase"
+              :items="searchStore.items"
+              :isLoading="searchStore.isLoadingSearch"
+              @choos="searchStore.choos"
+            />
+          </div>
+        </Transition>
 
         <div class="header__services">
           <ButtonService
@@ -44,22 +48,25 @@
         </div>
 
         <ButtonHamburger
-          :isActive="mobileMenuIsActive"
-          class="header__btn-menu"
-          @change="mobileMenuChange"
+          v-if="isMobile"
+          :isActive="isActive"
+          @change="toggleIsActive"
         />
       </div>
     </div>
   </header>
 
-  <div 
-    :class="mobileMenuBgClasses"
-    @click="mobileMenuChange(false)"
-  ></div>
+  <Transition name="menu-bg">
+    <div 
+      v-if="isActive && isMobile"
+      class="mobile-menu-bg"
+      @click="toggleIsActive(false)"
+    ></div>
+  </Transition>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { watch, onMounted } from 'vue';
 import useMetaStore from '@/stores/metaStore';
 import MenuMain from '@/components/MenuMain';
 import MenuSocial from '@/components/MenuSocial';
@@ -68,32 +75,21 @@ import ButtonService from '@/components/ui/ButtonService';
 import ButtonHamburger from '@/components/ui/ButtonHamburger';
 import useGlobalStore from '@/stores/globalStore';
 import useSearchStore from '@/stores/searchStore';
+import useDevice from '@/hooks/useDevice';
 
 const metaStore = useMetaStore();
 const globalStore = useGlobalStore();
 const searchStore = useSearchStore();
 
-const mobileMenuIsActive = ref(false);
+const { isActive, isMobile, toggleIsActive } = useDevice();
 
-const mobileMenuChange = (data) => {
-  mobileMenuIsActive.value = data;
-
-  if (data) {
+watch(isActive, (value) => {
+  if (value) {
     document.body.classList.add('body-mobile-fixed');
   } else {
     document.body.classList.remove('body-mobile-fixed');
   }
-}
-
-const headerPanelClasses = computed(() => ([
-  'header__panel',
-  { 'active': mobileMenuIsActive.value }
-]));
-
-const mobileMenuBgClasses = computed(() => ([
-  'mobile-menu-bg',
-  { 'active': mobileMenuIsActive.value }
-]));
+});
 
 onMounted(() => {
   document.body.classList.remove('body-mobile-fixed');
@@ -150,12 +146,11 @@ onMounted(() => {
       align-items: center;
       justify-content: flex-end;
       padding-left: 10px;
-
     }
-    
+
     @include media('max', $viewport-md) {
-      width: 0;
-      height: 0;
+      width: 300px;
+      height: 100%;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
@@ -165,18 +160,6 @@ onMounted(() => {
       top: 60px;
       right: 0;
       z-index: 1;
-      opacity: 0;
-      overflow: hidden;
-      transition: opacity .5s ease 0s, width 0s ease .5s, height 0s ease .5s;
-
-      &.active {
-        width: 300px;
-        height: 100%;
-        opacity: 1;
-        overflow-x: hidden;
-        overflow-y: auto;
-        transition: opacity .5s ease 0s, width 0s ease 0s, height 0s ease 0s;
-      }
     }
   }
 
@@ -234,37 +217,43 @@ onMounted(() => {
       margin-right: 0;
     }
   }
-
-  &__btn-menu {
-    @include media('min', $viewport-post-md) {
-      display: none;
-    }
-  }
 }
 
-.mobile-menu-bg {
-  @include media('min', $viewport-post-md) {
-    display: none;
-  }
-  
+.mobile-menu-bg {  
   @include media('max', $viewport-md) {
-    width: 0;
-    height: 0;
+    width: 100%;
+    height: 100%;
     backdrop-filter: blur(3px);
     background-color: rgba(0,0,0,.2);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 99;
-    opacity: 0;
-    transition: opacity .5s ease 0s, width 0s ease .5s, height 0s ease .5s;
+  }
+}
 
-    &.active {
-      width: 100%;
-      height: 100%;
-      opacity: 1;
-      transition: opacity .5s ease 0s, width 0s ease 0s, height 0s ease 0s;
-    }
+@include media('max', $viewport-md) {
+  .menu-enter-active,
+  .menu-leave-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .menu-enter-from,
+  .menu-leave-to {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  .menu-bg-enter-active,
+  .menu-bg-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .menu-bg-enter-from,
+  .menu-bg-leave-to {
+    opacity: 0;
   }
 }
 </style>

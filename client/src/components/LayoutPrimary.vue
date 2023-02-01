@@ -4,16 +4,19 @@
       <div class="layout-primary">
         <div class="layout-primary__sidebar">
           <ButtonHamburger
-            :isActive="mobileFilterIsActive"
-            class="layout-primary__sidebar-btn-menu"
-            @change="mobileFilterChange"
+            v-if="isMobile"
+            :isActive="isActive"
+            @change="toggleIsActive"
           />
 
-          <div
-            :class="mobileFilterWrapClasses"
-          >
-            <slot name="sidebar"></slot>
-          </div>
+          <Transition name="sidebar">
+            <div
+              v-if="isActive"
+              class="layout-primary__sidebar-wrap"
+            >
+              <slot name="sidebar"></slot>
+            </div>
+          </Transition>
         </div>
         <div class="layout-primary__content">
           <slot></slot>
@@ -24,20 +27,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
 import LayoutMain from '@/components/LayoutMain';
 import ButtonHamburger from '@/components/ui/ButtonHamburger';
+import useDevice from '@/hooks/useDevice';
 
-const mobileFilterIsActive = ref(false);
-
-const mobileFilterChange = (data) => {
-  mobileFilterIsActive.value = data;
-}
-
-const mobileFilterWrapClasses = computed(() => ([
-  'layout-primary__sidebar-wrap',
-  { 'active': mobileFilterIsActive.value }
-]));
+const { isActive, isMobile, toggleIsActive } = useDevice();
 </script>
 
 <style lang="scss" scoped>
@@ -52,23 +46,27 @@ const mobileFilterWrapClasses = computed(() => ([
   }
 
   &__sidebar {
-    margin-bottom: 15px;
-  }
-
-  &__sidebar-btn-menu {
-    @include media('min', $viewport-post-md) {
-      display: none;
+    @include media('max', $viewport-md) {
+      margin-bottom: 15px;
     }
   }
 
   &__sidebar-wrap {
     @include media('max', $viewport-md) {
-      display: none;
-
-      &.active {
-        display: block;
-      }
+      overflow: hidden;
     }
+  }
+}
+
+@include media('max', $viewport-md) {
+  .sidebar-enter-active,
+  .sidebar-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .sidebar-enter-from,
+  .sidebar-leave-to {
+    opacity: 0;
   }
 }
 </style>
