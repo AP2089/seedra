@@ -21,11 +21,11 @@
       :items="homeStore.products"
     />
 
-    <!-- <Blog
+    <Blog
       :title="$t('our.blog')"
       :items="homeStore.blog"
       moreUrl="/blog"
-    /> -->
+    />
 
     <SliderReviews
       :title="homeStore.reviews.title"
@@ -48,7 +48,7 @@ import SliderReviews from '@/components/SliderReviews';
 import Specification from '@/components/Specification';
 import BannerMain from '@/components/BannerMain';
 import BannerExtra from '@/components/BannerExtra';
-// import Blog from '@/components/Blog';
+import Blog from '@/components/Blog';
 import Products from '@/components/Products';
 import useHomeStore from '@/stores/homeStore';
 
